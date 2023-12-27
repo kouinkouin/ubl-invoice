@@ -92,9 +92,11 @@ class TaxScheme implements XmlSerializable
      */
     public function xmlSerialize(Writer $writer): void
     {
-        $writer->write([
-            Schema::CBC . 'ID' => $this->id
-        ]);
+        if ($this->id !== null) {
+            $writer->write([
+                Schema::CBC . 'ID' => $this->id
+            ]);
+        }
         if ($this->name !== null) {
             $writer->write([
                 Schema::CBC . 'Name' => $this->name
