@@ -12,6 +12,7 @@ class Item implements XmlSerializable
     private $buyersItemIdentification;
     private $sellersItemIdentification;
     private $standardItemIdentification;
+    private $originCountry;
     private $classifiedTaxCategory;
 
     /**
@@ -105,6 +106,24 @@ class Item implements XmlSerializable
     }
 
     /**
+     * @return Country
+     */
+    public function getOriginCountry(): ?Country
+    {
+        return $this->originCountry;
+    }
+
+    /**
+     * @param Country $country
+     * @return Address
+     */
+    public function setOriginCountry(Country $originCountry): Item
+    {
+        $this->originCountry = $originCountry;
+        return $this;
+    }
+
+    /**
      * @return ClassifiedTaxCategory
      */
     public function getClassifiedTaxCategory(): ?ClassifiedTaxCategory
@@ -161,6 +180,12 @@ class Item implements XmlSerializable
                 Schema::CAC . 'StandardItemIdentification' => [
                     Schema::CBC . 'ID' => $this->standardItemIdentification
                 ],
+            ]);
+        }
+
+        if (!empty($this->getOriginCountry())) {
+            $writer->write([
+                Schema::CAC . 'OriginCountry' => $this->originCountry,
             ]);
         }
 
