@@ -154,9 +154,11 @@ class Attachment implements XmlSerializable
             if ($this->filePath) {
                 $fileContents = base64_encode(file_get_contents($this->filePath));
                 $mimeType = $this->getFileMimeType();
+                $fileName = basename($this->filePath);
             } else {
                 $fileContents = $this->fileContent;
                 $mimeType = $this->mimeType;
+                $fileName = $this->fileName;
             }
 
             $writer->write([
@@ -164,7 +166,7 @@ class Attachment implements XmlSerializable
                 'value' => $fileContents,
                 'attributes' => [
                     'mimeCode' => $mimeType,
-                    'filename' => basename($this->filePath)
+                    'filename' => $fileName
                 ]
             ]);
         }
